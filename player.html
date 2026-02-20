@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Video Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--bg1, #0a0a2a) 0%, var(--bg2, #1a0033) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text, #fff);
+        }
+        .stars {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .title {
+            color: var(--text, #fff);
+            font-family: 'Fredoka', cursive;
+            font-size: 2.2em;
+            font-weight: 700;
+            text-shadow: 0 0 20px var(--primary, #00ffff), 0 0 40px var(--secondary, #0080ff);
+            margin-bottom: 10px;
+        }
+        .restart-btn {
+            background: linear-gradient(135deg, var(--wrong, #ff6b6b), var(--wrong, #ff4757));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+            transition: all 0.3s;
+        }
+        .restart-btn:hover {
+            transform: scale(1.1);
+        }
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .score {
+            color: #ffd700;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        .music-toggle {
+            background: linear-gradient(135deg, var(--btn, #667eea), var(--secondary, #764ba2));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        .video-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(0, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+        video {
+            width: 100%;
+            display: block;
+            background: #000;
+        }
+        .progress-container {
+            position: relative;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid var(--primary, #00ffff);
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary, #00d4ff), var(--secondary, #0080ff), var(--primary, #00ffff));
+            width: 0%;
+            transition: width 0.3s;
+            position: relative;
+        }
+        .progress-bar::after {
+            content: var(--progress-icon, '🚀');
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+        }
+        .quiz-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .quiz-box {
+            background: linear-gradient(135deg, rgba(74, 0, 224, 0.9), rgba(142, 45, 226, 0.9));
+            border: 3px solid var(--primary, #00ffff);
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+        }
+        .question-number {
+            color: #ffd700;
+            font-family: 'Fredoka', cursive;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .question-text {
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--primary, #00ffff);
+            border-radius: 50px;
+            padding: 18px 28px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        .option-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+        .option-btn.correct {
+            background: linear-gradient(135deg, var(--correct, #00ff88), var(--correct, #00cc66));
+            border-color: var(--correct, #00ff88);
+        }
+        .option-btn.wrong {
+            background: linear-gradient(135deg, var(--wrong, #ff4757), var(--wrong, #ff3838));
+            border-color: var(--wrong, #ff4757);
+        }
+        .hint-box {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--wrong, #ff6b6b), var(--wrong, #ff8e53));
+            color: white;
+            padding: 18px 35px;
+            border-radius: 20px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            z-index: 15;
+            display: none;
+        }
+        .confetti-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px; height: 10px;
+            background: #ffd700;
+            animation: fall 3s linear;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starfield"></div>
+    <div class="confetti-container" id="confetti-container"></div>
+    <div class="container">
+        <div class="header">
+            <h1 class="title" id="gameTitle">Smart Video Player</h1>
+            <button class="restart-btn" onclick="restartMission()">Replay</button>
+        </div>
+        <div class="score-container">
+            <div class="score" id="score">Score: 0/0</div>
+            <button class="music-toggle" onclick="toggleMusic()" id="music-btn">🔇</button>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="video-container">
+            <video id="video">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hint-box" id="hint-box"></div>
+            <div class="quiz-overlay" id="quiz-overlay">
+                <div class="quiz-box">
+                    <div class="question-number" id="question-number"></div>
+                    <div class="question-text" id="question-text"></div>
+                    <div class="options" id="options"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="bg-music" loop></audio>
+
+    <script>
+        // Загрузка конфигурации из URL
+        let config = {};
+        const urlParams = new URLSearchParams(window.location.search);
+        const configParam = urlParams.get('config');
+        
+        if (configParam) {
+            try {
+                config = JSON.parse(decodeURIComponent(configParam));
+            } catch (e) {
+                console.error('Ошибка загрузки конфигурации:', e);
+                config = getDefaultConfig();
+            }
+        } else {
+            config = getDefaultConfig();
+        }
+
+        function getDefaultConfig() {
+            return {
+                videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                language: 'en',
+                gameTitle: 'Smart Video Player',
+                questions: [],
+                design: {}
+            };
+        }
+
+        // Применение дизайна
+        function applyDesign() {
+            const d = config.design || {};
+            document.documentElement.style.setProperty('--bg1', d.bgColor1 || '#0a0a2a');
+            document.documentElement.style.setProperty('--bg2', d.bgColor2 || '#1a0033');
+            document.documentElement.style.setProperty('--primary', d.primaryColor || '#00ffff');
+            document.documentElement.style.setProperty('--secondary', d.secondaryColor || '#0080ff');
+            document.documentElement.style.setProperty('--btn', d.btnColor || '#667eea');
+            document.documentElement.style.setProperty('--correct', d.correctColor || '#00ff88');
+            document.documentElement.style.setProperty('--wrong', d.wrongColor || '#ff4757');
+            document.documentElement.style.setProperty('--text', d.textColor || '#ffffff');
+            document.documentElement.style.setProperty('--progress-icon', d.progressIcon || '🚀');
+            
+            // Звёздный фон
+            if (d.starfield !== false) {
+                createStarfield();
+            }
+        }
+
+        // Применение настроек
+        function applySettings() {
+            document.getElementById('gameTitle').textContent = config.gameTitle || 'Smart Video Player';
+            document.getElementById('video').querySelector('source').src = config.videoUrl || '';
+            
+            if (config.musicUrl) {
+                document.getElementById('bg-music').innerHTML = `<source src="${config.musicUrl}" type="audio/mp3">`;
+            }
+        }
+
+        // Состояние игры
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let questionsAsked = new Set();
+        let musicEnabled = false;
+        const video = document.getElementById('video');
+        const quizOverlay = document.getElementById('quiz-overlay');
+        const questionNumber = document.getElementById('question-number');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreDisplay = document.getElementById('score');
+        const hintBox = document.getElementById('hint-box');
+        const confettiContainer = document.getElementById('confetti-container');
+        const bgMusic = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+
+        // Создание звёзд
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starfield.appendChild(star);
+            }
+        }
+
+        // Обновление прогресса
+        function updateProgress() {
+            if (video.duration) {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = progress + '%';
+            }
+        }
+
+        // Проверка триггеров
+        function checkQuizTrigger() {
+            const currentTime = Math.floor(video.currentTime);
+            const questions = config.questions || [];
+            
+            for (let i = 0; i < questions.length; i++) {
+                const quiz = questions[i];
+                if (currentTime === quiz.time && !questionsAsked.has(i)) {
+                    questionsAsked.add(i);
+                    showQuiz(i);
+                    break;
+                }
+            }
+        }
+
+        // Показ вопроса
+        function showQuiz(index) {
+            video.pause();
+            currentQuestionIndex = index;
+            const quiz = config.questions[index];
+
+            questionNumber.textContent = `Question ${index + 1} of ${config.questions.length}`;
+            questionText.textContent = quiz.question;
+
+            optionsContainer.innerHTML = '';
+            quiz.options.forEach((option, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.onclick = () => checkAnswer(i, quiz.correct, quiz.hint);
+                optionsContainer.appendChild(btn);
+            });
+
+            quizOverlay.style.display = 'flex';
+        }
+
+        // Проверка ответа
+        function checkAnswer(selectedIndex, correctLetter, hint) {
+            const buttons = optionsContainer.children;
+            const selectedLetter = config.questions[currentQuestionIndex].options[selectedIndex].split(')')[0].trim();
+            
+            for (let btn of buttons) {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            }
+
+            if (selectedLetter === correctLetter) {
+                buttons[selectedIndex].classList.add('correct');
+                score++;
+                scoreDisplay.textContent = `⭐ Stars: ${score}/${config.questions.length}`;
+                createConfetti();
+                setTimeout(() => {
+                    quizOverlay.style.display = 'none';
+                    video.play();
+                }, 2000);
+            } else {
+                buttons[selectedIndex].classList.add('wrong');
+                for (let i = 0; i < buttons.length; i++) {
+                    const btnLetter = config.questions[currentQuestionIndex].options[i].split(')')[0].trim();
+                    if (btnLetter === correctLetter) {
+                        buttons[i].classList.add('correct');
+                        break;
+                    }
+                }
+                hintBox.textContent = hint;
+                hintBox.style.display = 'block';
+                setTimeout(() => {
+                    hintBox.style.display = 'none';
+                    quizOverlay.style.display = 'none';
+                    video.play();
+                }, 3000);
+            }
+        }
+
+        // Конфетти
+        function createConfetti() {
+            const colors = ['#9b59b6', '#3498db', '#c0c0c0', '#ffd700', '#00ffff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confettiContainer.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Перезапуск
+        function restartMission() {
+            video.currentTime = 0;
+            score = 0;
+            questionsAsked.clear();
+            scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
+            quizOverlay.style.display = 'none';
+            hintBox.style.display = 'none';
+            video.play();
+        }
+
+        // Музыка
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            if (musicEnabled) {
+                bgMusic.play().catch(() => {});
+                musicBtn.textContent = '🔊';
+            } else {
+                bgMusic.pause();
+                musicBtn.textContent = '🔇';
+            }
+        }
+
+        // События
+        video.addEventListener('timeupdate', () => {
+            updateProgress();
+            checkQuizTrigger();
+        });
+
+        video.addEventListener('ended', () => {
+            alert(`🎉 Hurray! Score: ${score}/${config.questions.length}`);
+        });
+
+        // Инициализация
+        applyDesign();
+        applySettings();
+        video.load();
+        scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
+
+        document.addEventListener('click', () => {
+            if (video.paused && quizOverlay.style.display !== 'flex') {
+                video.play().catch(() => {});
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
