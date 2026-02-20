@@ -63,9 +63,7 @@
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
             transition: all 0.3s;
         }
-        .restart-btn:hover {
-            transform: scale(1.1);
-        }
+        .restart-btn:hover { transform: scale(1.1); }
         .score-container {
             display: flex;
             justify-content: space-between;
@@ -224,12 +222,23 @@
         @keyframes fall {
             to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--text, #fff);
+            font-size: 1.5em;
+        }
     </style>
 </head>
 <body>
     <div class="stars" id="starfield"></div>
     <div class="confetti-container" id="confetti-container"></div>
-    <div class="container">
+    
+    <div id="loading" class="loading">🚀 Загрузка...</div>
+    
+    <div class="container" id="gameContainer" style="display: none;">
         <div class="header">
             <h1 class="title" id="gameTitle">Smart Video Player</h1>
             <button class="restart-btn" onclick="restartMission()">Replay</button>
@@ -256,69 +265,32 @@
             </div>
         </div>
     </div>
+    
     <audio id="bg-music" loop></audio>
 
     <script>
-        // Загрузка конфигурации из URL
+        // Конфигурация по умолчанию
+        const defaultConfig = {
+            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            language: 'en',
+            gameTitle: 'Smart Video Player',
+            progressIcon: '🚀',
+            musicUrl: '',
+            questions: [],
+            design: {
+                bgColor1: '#0a0a2a',
+                bgColor2: '#1a0033',
+                primaryColor: '#00ffff',
+                secondaryColor: '#0080ff',
+                btnColor: '#667eea',
+                correctColor: '#00ff88',
+                wrongColor: '#ff4757',
+                textColor: '#ffffff',
+                starfield: true
+            }
+        };
+
         let config = {};
-        const urlParams = new URLSearchParams(window.location.search);
-        const configParam = urlParams.get('config');
-        
-        if (configParam) {
-            try {
-                config = JSON.parse(decodeURIComponent(configParam));
-            } catch (e) {
-                console.error('Ошибка загрузки конфигурации:', e);
-                config = getDefaultConfig();
-            }
-        } else {
-            config = getDefaultConfig();
-        }
-
-        function getDefaultConfig() {
-            return {
-                videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                language: 'en',
-                gameTitle: 'Smart Video Player',
-                questions: [],
-                design: {}
-            };
-        }
-
-        // Применение дизайна
-        function applyDesign() {
-            const d = config.design || {};
-            document.documentElement.style.setProperty('--bg1', d.bgColor1 || '#0a0a2a');
-            document.documentElement.style.setProperty('--bg2', d.bgColor2 || '#1a0033');
-            document.documentElement.style.setProperty('--primary', d.primaryColor || '#00ffff');
-            document.documentElement.style.setProperty('--secondary', d.secondaryColor || '#0080ff');
-            document.documentElement.style.setProperty('--btn', d.btnColor || '#667eea');
-            document.documentElement.style.setProperty('--correct', d.correctColor || '#00ff88');
-            document.documentElement.style.setProperty('--wrong', d.wrongColor || '#ff4757');
-            document.documentElement.style.setProperty('--text', d.textColor || '#ffffff');
-            document.documentElement.style.setProperty('--progress-icon', d.progressIcon || '🚀');
-            
-            // Звёздный фон
-            if (d.starfield !== false) {
-                createStarfield();
-            }
-        }
-
-        // Применение настроек
-        function applySettings() {
-            document.getElementById('gameTitle').textContent = config.gameTitle || 'Smart Video Player';
-            document.getElementById('video').querySelector('source').src = config.videoUrl || '';
-            
-            if (config.musicUrl) {
-                document.getElementById('bg-music').innerHTML = `<source src="${config.musicUrl}" type="audio/mp3">`;
-            }
-        }
-
-        // Состояние игры
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let questionsAsked = new Set();
-        let musicEnabled = false;
         const video = document.getElementById('video');
         const quizOverlay = document.getElementById('quiz-overlay');
         const questionNumber = document.getElementById('question-number');
@@ -330,6 +302,68 @@
         const confettiContainer = document.getElementById('confetti-container');
         const bgMusic = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
+        const gameContainer = document.getElementById('gameContainer');
+        const loading = document.getElementById('loading');
+
+        // Загрузка конфигурации
+        function loadConfig() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const configParam = urlParams.get('config');
+            
+            if (configParam) {
+                try {
+                    // Декодируем base64
+                    const configJson = decodeURIComponent(escape(atob(configParam)));
+                    config = JSON.parse(configJson);
+                    console.log('✅ Конфигурация загружена:', config);
+                } catch (e) {
+                    console.error('❌ Ошибка загрузки конфигурации:', e);
+                    config = { ...defaultConfig };
+                }
+            } else {
+                console.log('⚠️ Конфигурация не найдена, используем default');
+                config = { ...defaultConfig };
+            }
+            
+            // Merge с default для безопасности
+            config = { ...defaultConfig, ...config, design: { ...defaultConfig.design, ...(config.design || {}) } };
+        }
+
+        // Применение дизайна
+        function applyDesign() {
+            const d = config.design || {};
+            document.documentElement.style.setProperty('--bg1', d.bgColor1);
+            document.documentElement.style.setProperty('--bg2', d.bgColor2);
+            document.documentElement.style.setProperty('--primary', d.primaryColor);
+            document.documentElement.style.setProperty('--secondary', d.secondaryColor);
+            document.documentElement.style.setProperty('--btn', d.btnColor);
+            document.documentElement.style.setProperty('--correct', d.correctColor);
+            document.documentElement.style.setProperty('--wrong', d.wrongColor);
+            document.documentElement.style.setProperty('--text', d.textColor);
+            document.documentElement.style.setProperty('--progress-icon', d.progressIcon || '🚀');
+            
+            if (d.starfield !== false) {
+                createStarfield();
+            }
+        }
+
+        // Применение настроек
+        function applySettings() {
+            document.getElementById('gameTitle').textContent = config.gameTitle;
+            document.getElementById('video').querySelector('source').src = config.videoUrl;
+            
+            if (config.musicUrl) {
+                document.getElementById('bg-music').innerHTML = `<source src="${config.musicUrl}" type="audio/mp3">`;
+            }
+            
+            scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
+        }
+
+        // Состояние игры
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let questionsAsked = new Set();
+        let musicEnabled = false;
 
         // Создание звёзд
         function createStarfield() {
@@ -476,16 +510,25 @@
         });
 
         // Инициализация
-        applyDesign();
-        applySettings();
-        video.load();
-        scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
+        function init() {
+            loadConfig();
+            applyDesign();
+            applySettings();
+            video.load();
+            
+            // Показываем игру после загрузки
+            loading.style.display = 'none';
+            gameContainer.style.display = 'block';
+            
+            // Автозапуск по клику (требуется для браузеров)
+            document.addEventListener('click', () => {
+                if (video.paused && quizOverlay.style.display !== 'flex') {
+                    video.play().catch(() => {});
+                }
+            }, { once: true });
+        }
 
-        document.addEventListener('click', () => {
-            if (video.paused && quizOverlay.style.display !== 'flex') {
-                video.play().catch(() => {});
-            }
-        }, { once: true });
+        init();
     </script>
 </body>
 </html>
