@@ -15,16 +15,12 @@
             color: var(--text, #fff);
         }
         .stars {
-            position: fixed;
-            top: 0; left: 0;
+            position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            pointer-events: none; z-index: 0;
         }
         .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
+            position: absolute; background: white; border-radius: 50%;
             animation: twinkle 3s infinite;
         }
         @keyframes twinkle {
@@ -32,152 +28,171 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+            position: relative; z-index: 1;
+            max-width: 900px; margin: 0 auto; padding: 20px;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        .header { text-align: center; margin-bottom: 20px; }
+        
+        /* Glitch effect для заголовка */
         .title {
             color: var(--text, #fff);
             font-family: 'Fredoka', cursive;
-            font-size: 2.2em;
-            font-weight: 700;
+            font-size: 2.2em; font-weight: 700;
             text-shadow: 0 0 20px var(--primary, #00ffff), 0 0 40px var(--secondary, #0080ff);
             margin-bottom: 10px;
+            position: relative;
         }
+        .title.glitch {
+            animation: glitch 2s infinite;
+        }
+        .title.glitch::before, .title.glitch::after {
+            content: attr(data-text);
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .title.glitch::before {
+            left: 2px; text-shadow: -2px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .title.glitch::after {
+            left: -2px; text-shadow: -2px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(30px, 9999px, 10px, 0); }
+            20% { clip: rect(80px, 9999px, 90px, 0); }
+            40% { clip: rect(10px, 9999px, 60px, 0); }
+            60% { clip: rect(50px, 9999px, 20px, 0); }
+            80% { clip: rect(20px, 9999px, 80px, 0); }
+            100% { clip: rect(70px, 9999px, 40px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(10px, 9999px, 80px, 0); }
+            20% { clip: rect(60px, 9999px, 20px, 0); }
+            40% { clip: rect(90px, 9999px, 40px, 0); }
+            60% { clip: rect(30px, 9999px, 70px, 0); }
+            80% { clip: rect(50px, 9999px, 10px, 0); }
+            100% { clip: rect(80px, 9999px, 60px, 0); }
+        }
+        
         .restart-btn {
             background: linear-gradient(135deg, var(--wrong, #ff6b6b), var(--wrong, #ff4757));
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 24px;
-            font-family: 'Fredoka', cursive;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
+            color: white; border: none; border-radius: 50px;
+            padding: 12px 24px; font-family: 'Fredoka', cursive;
+            font-size: 1em; font-weight: 600; cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
             transition: all 0.3s;
         }
         .restart-btn:hover { transform: scale(1.1); }
+        
         .score-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; padding: 15px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            border-radius: 20px; backdrop-filter: blur(10px);
         }
         .score {
-            color: #ffd700;
-            font-family: 'Fredoka', cursive;
-            font-size: 1.5em;
-            font-weight: 700;
+            color: #ffd700; font-family: 'Fredoka', cursive;
+            font-size: 1.5em; font-weight: 700;
         }
-        .music-toggle {
-            background: linear-gradient(135deg, var(--btn, #667eea), var(--secondary, #764ba2));
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
+        
         .video-container {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 50px rgba(0, 255, 255, 0.3);
-            margin-bottom: 20px;
+            position: relative; border-radius: 20px;
+            overflow: hidden; box-shadow: 0 10px 50px rgba(0, 255, 255, 0.3);
+            margin-bottom: 20px; background: #000;
         }
-        video {
-            width: 100%;
-            display: block;
-            background: #000;
+        
+        /* Видео и iframe */
+        video, .video-iframe {
+            width: 100%; display: block; background: #000;
+            aspect-ratio: 16/9;
         }
+        .video-iframe iframe {
+            width: 100%; height: 100%; border: none;
+        }
+        
+        /* Прогресс-бар с анимированной иконкой */
         .progress-container {
-            position: relative;
-            height: 30px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
+            position: relative; height: 30px;
+            background: rgba(0, 0, 0, 0.5); border-radius: 15px;
+            overflow: hidden; margin-bottom: 20px;
             border: 2px solid var(--primary, #00ffff);
         }
         .progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--primary, #00d4ff), var(--secondary, #0080ff), var(--primary, #00ffff));
-            width: 0%;
-            transition: width 0.3s;
-            position: relative;
+            width: 0%; transition: width 0.3s; position: relative;
         }
-        .progress-bar::after {
-            content: var(--progress-icon, '🚀');
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5em;
+        .progress-icon {
+            position: absolute; right: -20px; top: 50%;
+            transform: translateY(-50%); font-size: 1.8em;
+            transition: right 0.3s;
         }
+        /* Анимации иконки */
+        .progress-icon.bounce { animation: bounce 1s infinite; }
+        .progress-icon.spin { animation: spin 2s linear infinite; }
+        .progress-icon.pulse { animation: pulse 1s infinite; }
+        .progress-icon.swing { animation: swing 1s ease-in-out infinite; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-70%) scale(1.2); }
+        }
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.3); }
+        }
+        @keyframes swing {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            25% { transform: translateY(-50%) rotate(15deg); }
+            75% { transform: translateY(-50%) rotate(-15deg); }
+        }
+        
         .quiz-overlay {
-            position: absolute;
-            top: 0; left: 0;
+            position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
-            display: none;
-            align-items: center;
-            justify-content: center;
+            display: none; align-items: center; justify-content: center;
             z-index: 10;
         }
         .quiz-box {
             background: linear-gradient(135deg, rgba(74, 0, 224, 0.9), rgba(142, 45, 226, 0.9));
             border: 3px solid var(--primary, #00ffff);
-            border-radius: 30px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
+            border-radius: 30px; padding: 30px;
+            max-width: 500px; width: 90%;
             box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
         }
         .question-number {
-            color: #ffd700;
-            font-family: 'Fredoka', cursive;
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-align: center;
+            color: #ffd700; font-family: 'Fredoka', cursive;
+            font-size: 1.3em; font-weight: 600;
+            margin-bottom: 15px; text-align: center;
         }
         .question-text {
-            color: white;
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.5em;
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-align: center;
+            color: white; font-family: 'Nunito', sans-serif;
+            font-size: 1.5em; font-weight: 700;
+            margin-bottom: 25px; text-align: center;
         }
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .options { display: flex; flex-direction: column; gap: 12px; }
         .option-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid var(--primary, #00ffff);
-            border-radius: 50px;
-            padding: 18px 28px;
-            color: white;
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.2em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: left;
+            border-radius: 50px; padding: 18px 28px;
+            color: white; font-family: 'Nunito', sans-serif;
+            font-size: 1.2em; font-weight: 700;
+            cursor: pointer; transition: all 0.3s; text-align: left;
         }
         .option-btn:hover {
             background: rgba(0, 255, 255, 0.2);
@@ -191,119 +206,133 @@
             background: linear-gradient(135deg, var(--wrong, #ff4757), var(--wrong, #ff3838));
             border-color: var(--wrong, #ff4757);
         }
+        
+        /* Поле ввода для текстовых вопросов */
+        .text-input-container {
+            margin-top: 15px;
+        }
+        .text-input {
+            width: 100%; padding: 15px;
+            border: 2px solid var(--primary, #00ffff);
+            border-radius: 10px; background: rgba(0,0,0,0.3);
+            color: white; font-family: 'Nunito', sans-serif;
+            font-size: 1.1em; margin-bottom: 10px;
+        }
+        .text-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0,255,255,0.5);
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, var(--btn, #667eea), var(--secondary, #764ba2));
+            color: white; border: none; border-radius: 50px;
+            padding: 12px 30px; font-family: 'Fredoka', cursive;
+            font-size: 1em; font-weight: 700; cursor: pointer;
+            width: 100%; transition: all 0.3s;
+        }
+        .submit-btn:hover { transform: scale(1.05); }
+        
         .hint-box {
-            position: absolute;
-            top: 20px;
-            left: 50%;
+            position: absolute; top: 20px; left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(135deg, var(--wrong, #ff6b6b), var(--wrong, #ff8e53));
-            color: white;
-            padding: 18px 35px;
-            border-radius: 20px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.3em;
-            font-weight: 700;
-            z-index: 15;
-            display: none;
+            color: white; padding: 18px 35px; border-radius: 20px;
+            font-family: 'Nunito', sans-serif; font-size: 1.3em;
+            font-weight: 700; z-index: 15; display: none;
         }
         .confetti-container {
-            position: fixed;
-            top: 0; left: 0;
+            position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 20;
+            pointer-events: none; z-index: 20;
         }
         .confetti {
-            position: absolute;
-            width: 10px; height: 10px;
-            background: #ffd700;
-            animation: fall 3s linear;
+            position: absolute; width: 10px; height: 10px;
+            background: #ffd700; animation: fall 3s linear;
         }
         @keyframes fall {
             to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
         .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: var(--text, #fff);
-            font-size: 1.5em;
+            display: flex; align-items: center; justify-content: center;
+            height: 100vh; color: var(--text, #fff); font-size: 1.5em;
         }
     </style>
 </head>
 <body>
     <div class="stars" id="starfield"></div>
     <div class="confetti-container" id="confetti-container"></div>
-    
     <div id="loading" class="loading">🚀 Загрузка...</div>
     
     <div class="container" id="gameContainer" style="display: none;">
         <div class="header">
-            <h1 class="title" id="gameTitle">Smart Video Player</h1>
+            <h1 class="title" id="gameTitle" data-text="Smart Video Player">Smart Video Player</h1>
             <button class="restart-btn" onclick="restartMission()">Replay</button>
         </div>
         <div class="score-container">
             <div class="score" id="score">Score: 0/0</div>
-            <button class="music-toggle" onclick="toggleMusic()" id="music-btn">🔇</button>
         </div>
         <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
+            <div class="progress-bar" id="progress-bar">
+                <span class="progress-icon" id="progress-icon"></span>
+            </div>
         </div>
-        <div class="video-container">
-            <video id="video">
-                <source src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="hint-box" id="hint-box"></div>
-            <div class="quiz-overlay" id="quiz-overlay">
-                <div class="quiz-box">
-                    <div class="question-number" id="question-number"></div>
-                    <div class="question-text" id="question-text"></div>
-                    <div class="options" id="options"></div>
+        <div class="video-container" id="videoContainer">
+            <!-- Видео или iframe будут вставлены здесь -->
+        </div>
+        <div class="hint-box" id="hint-box"></div>
+        <div class="quiz-overlay" id="quiz-overlay">
+            <div class="quiz-box">
+                <div class="question-number" id="question-number"></div>
+                <div class="question-text" id="question-text"></div>
+                <div class="options" id="options"></div>
+                <!-- Контейнер для текстового ввода -->
+                <div class="text-input-container" id="textInputContainer" style="display: none;">
+                    <input type="text" class="text-input" id="textAnswer" placeholder="Введите ваш ответ...">
+                    <button class="submit-btn" onclick="checkTextAnswer()">✅ Проверить</button>
                 </div>
             </div>
         </div>
     </div>
-    
-    <audio id="bg-music" loop></audio>
 
     <script>
-        // Конфигурация по умолчанию
         const defaultConfig = {
+            videoSourceType: 'direct',
             videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            videoIframe: '',
             language: 'en',
             gameTitle: 'Smart Video Player',
             progressIcon: '🚀',
-            musicUrl: '',
+            iconAnimation: 'none',
             questions: [],
             design: {
-                bgColor1: '#0a0a2a',
-                bgColor2: '#1a0033',
-                primaryColor: '#00ffff',
-                secondaryColor: '#0080ff',
-                btnColor: '#667eea',
-                correctColor: '#00ff88',
-                wrongColor: '#ff4757',
-                textColor: '#ffffff',
-                starfield: true
+                bgColor1: '#0a0a2a', bgColor2: '#1a0033',
+                primaryColor: '#00ffff', secondaryColor: '#0080ff',
+                btnColor: '#667eea', correctColor: '#00ff88',
+                wrongColor: '#ff4757', textColor: '#ffffff',
+                starfield: true, glitchEffect: true
             }
         };
 
         let config = {};
-        const video = document.getElementById('video');
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let questionsAsked = new Set();
+        
+        const videoContainer = document.getElementById('videoContainer');
         const quizOverlay = document.getElementById('quiz-overlay');
         const questionNumber = document.getElementById('question-number');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options');
+        const textInputContainer = document.getElementById('textInputContainer');
+        const textAnswer = document.getElementById('textAnswer');
         const progressBar = document.getElementById('progress-bar');
+        const progressIcon = document.getElementById('progress-icon');
         const scoreDisplay = document.getElementById('score');
         const hintBox = document.getElementById('hint-box');
         const confettiContainer = document.getElementById('confetti-container');
-        const bgMusic = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-btn');
         const gameContainer = document.getElementById('gameContainer');
         const loading = document.getElementById('loading');
+        let videoElement = null;
+        let isIframeVideo = false;
 
         // Загрузка конфигурации
         function loadConfig() {
@@ -312,20 +341,15 @@
             
             if (configParam) {
                 try {
-                    // Декодируем base64
                     const configJson = decodeURIComponent(escape(atob(configParam)));
                     config = JSON.parse(configJson);
-                    console.log('✅ Конфигурация загружена:', config);
                 } catch (e) {
-                    console.error('❌ Ошибка загрузки конфигурации:', e);
+                    console.error('Ошибка конфигурации:', e);
                     config = { ...defaultConfig };
                 }
             } else {
-                console.log('⚠️ Конфигурация не найдена, используем default');
                 config = { ...defaultConfig };
             }
-            
-            // Merge с default для безопасности
             config = { ...defaultConfig, ...config, design: { ...defaultConfig.design, ...(config.design || {}) } };
         }
 
@@ -340,30 +364,64 @@
             document.documentElement.style.setProperty('--correct', d.correctColor);
             document.documentElement.style.setProperty('--wrong', d.wrongColor);
             document.documentElement.style.setProperty('--text', d.textColor);
-            document.documentElement.style.setProperty('--progress-icon', d.progressIcon || '🚀');
             
-            if (d.starfield !== false) {
-                createStarfield();
-            }
-        }
-
-        // Применение настроек
-        function applySettings() {
-            document.getElementById('gameTitle').textContent = config.gameTitle;
-            document.getElementById('video').querySelector('source').src = config.videoUrl;
-            
-            if (config.musicUrl) {
-                document.getElementById('bg-music').innerHTML = `<source src="${config.musicUrl}" type="audio/mp3">`;
+            // Прогресс-бар иконка
+            progressIcon.textContent = config.progressIcon || '🚀';
+            progressIcon.className = 'progress-icon';
+            if (config.iconAnimation && config.iconAnimation !== 'none') {
+                progressIcon.classList.add(config.iconAnimation);
             }
             
-            scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
+            // Глитч-эффект
+            const title = document.getElementById('gameTitle');
+            title.setAttribute('data-text', config.gameTitle);
+            if (d.glitchEffect) {
+                title.classList.add('glitch');
+            } else {
+                title.classList.remove('glitch');
+            }
+            
+            if (d.starfield !== false) createStarfield();
         }
 
-        // Состояние игры
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let questionsAsked = new Set();
-        let musicEnabled = false;
+        // Настройка видео
+        function setupVideo() {
+            videoContainer.innerHTML = '';
+            
+            if (config.videoSourceType === 'direct') {
+                // Прямое видео MP4
+                videoElement = document.createElement('video');
+                videoElement.id = 'video';
+                videoElement.innerHTML = `<source src="${config.videoUrl}" type="video/mp4">Your browser does not support the video tag.`;
+                videoElement.style.width = '100%';
+                videoContainer.appendChild(videoElement);
+                isIframeVideo = false;
+            } else {
+                // Iframe вставка
+                const iframeWrapper = document.createElement('div');
+                iframeWrapper.className = 'video-iframe';
+                iframeWrapper.innerHTML = config.videoIframe || '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>';
+                videoContainer.appendChild(iframeWrapper);
+                isIframeVideo = true;
+                // Для iframe прогресс не отслеживается точно
+                simulateProgressForIframe();
+            }
+        }
+        
+        // Имитация прогресса для iframe
+        function simulateProgressForIframe() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                if (quizOverlay.style.display === 'flex') return;
+                progress += 0.5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    onVideoEnd();
+                }
+                progressBar.style.width = progress + '%';
+            }, 1000);
+        }
 
         // Создание звёзд
         function createStarfield() {
@@ -380,17 +438,17 @@
             }
         }
 
-        // Обновление прогресса
+        // Обновление прогресса (для MP4)
         function updateProgress() {
-            if (video.duration) {
-                const progress = (video.currentTime / video.duration) * 100;
-                progressBar.style.width = progress + '%';
-            }
+            if (isIframeVideo || !videoElement?.duration) return;
+            const progress = (videoElement.currentTime / videoElement.duration) * 100;
+            progressBar.style.width = progress + '%';
         }
 
-        // Проверка триггеров
+        // Проверка триггеров вопросов
         function checkQuizTrigger() {
-            const currentTime = Math.floor(video.currentTime);
+            if (isIframeVideo) return;
+            const currentTime = Math.floor(videoElement?.currentTime || 0);
             const questions = config.questions || [];
             
             for (let i = 0; i < questions.length; i++) {
@@ -405,49 +463,64 @@
 
         // Показ вопроса
         function showQuiz(index) {
-            video.pause();
+            if (!isIframeVideo && videoElement) videoElement.pause();
+            
             currentQuestionIndex = index;
             const quiz = config.questions[index];
 
             questionNumber.textContent = `Question ${index + 1} of ${config.questions.length}`;
             questionText.textContent = quiz.question;
-
             optionsContainer.innerHTML = '';
-            quiz.options.forEach((option, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = option;
-                btn.onclick = () => checkAnswer(i, quiz.correct, quiz.hint);
-                optionsContainer.appendChild(btn);
-            });
+            textInputContainer.style.display = 'none';
+            textAnswer.value = '';
+
+            if (quiz.type === 'multiple') {
+                // Вопрос с выбором
+                quiz.options.forEach((option, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option;
+                    btn.onclick = () => checkMultipleAnswer(i, quiz.correct, quiz.hint);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                // Вопрос с вводом текста
+                optionsContainer.style.display = 'none';
+                textInputContainer.style.display = 'block';
+                textAnswer.dataset.correct = quiz.correctAnswer;
+                textAnswer.dataset.hint = quiz.hint;
+                textAnswer.onkeydown = (e) => { if (e.key === 'Enter') checkTextAnswer(); };
+                textAnswer.focus();
+                return;
+            }
 
             quizOverlay.style.display = 'flex';
         }
 
-        // Проверка ответа
-        function checkAnswer(selectedIndex, correctLetter, hint) {
+        // Проверка ответа (выбор)
+        function checkMultipleAnswer(selectedIndex, correctLetter, hint) {
             const buttons = optionsContainer.children;
-            const selectedLetter = config.questions[currentQuestionIndex].options[selectedIndex].split(')')[0].trim();
+            const selectedText = config.questions[currentQuestionIndex].options[selectedIndex];
+            const selectedLetter = selectedText.split(')')[0].trim().toUpperCase();
             
-            for (let btn of buttons) {
-                btn.disabled = true;
-                btn.style.cursor = 'not-allowed';
-            }
+            for (let btn of buttons) { btn.disabled = true; btn.style.cursor = 'not-allowed'; }
 
-            if (selectedLetter === correctLetter) {
+            if (selectedLetter === correctLetter.toUpperCase()) {
                 buttons[selectedIndex].classList.add('correct');
                 score++;
                 scoreDisplay.textContent = `⭐ Stars: ${score}/${config.questions.length}`;
                 createConfetti();
                 setTimeout(() => {
                     quizOverlay.style.display = 'none';
-                    video.play();
+                    optionsContainer.style.display = 'flex';
+                    if (!isIframeVideo && videoElement) videoElement.play();
                 }, 2000);
             } else {
                 buttons[selectedIndex].classList.add('wrong');
                 for (let i = 0; i < buttons.length; i++) {
-                    const btnLetter = config.questions[currentQuestionIndex].options[i].split(')')[0].trim();
-                    if (btnLetter === correctLetter) {
+                    const btnText = config.questions[currentQuestionIndex].options[i];
+                    const btnLetter = btnText.split(')')[0].trim().toUpperCase();
+                    if (btnLetter === correctLetter.toUpperCase()) {
                         buttons[i].classList.add('correct');
                         break;
                     }
@@ -457,7 +530,48 @@
                 setTimeout(() => {
                     hintBox.style.display = 'none';
                     quizOverlay.style.display = 'none';
-                    video.play();
+                    optionsContainer.style.display = 'flex';
+                    if (!isIframeVideo && videoElement) videoElement.play();
+                }, 3000);
+            }
+        }
+
+        // Проверка ответа (текст)
+        function checkTextAnswer() {
+            const userAnswer = textAnswer.value.trim().toLowerCase();
+            const correctAnswer = textAnswer.dataset.correct.toLowerCase();
+            const hint = textAnswer.dataset.hint;
+            
+            textAnswer.disabled = true;
+            document.querySelector('.submit-btn').disabled = true;
+
+            if (userAnswer === correctAnswer) {
+                textAnswer.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--correct');
+                score++;
+                scoreDisplay.textContent = `⭐ Stars: ${score}/${config.questions.length}`;
+                createConfetti();
+                setTimeout(() => {
+                    quizOverlay.style.display = 'none';
+                    textInputContainer.style.display = 'none';
+                    optionsContainer.style.display = 'flex';
+                    textAnswer.disabled = false;
+                    document.querySelector('.submit-btn').disabled = false;
+                    if (!isIframeVideo && videoElement) videoElement.play();
+                }, 2000);
+            } else {
+                textAnswer.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--wrong');
+                hintBox.textContent = hint;
+                hintBox.style.display = 'block';
+                setTimeout(() => {
+                    hintBox.style.display = 'none';
+                    quizOverlay.style.display = 'none';
+                    textInputContainer.style.display = 'none';
+                    optionsContainer.style.display = 'flex';
+                    textAnswer.value = '';
+                    textAnswer.disabled = false;
+                    textAnswer.style.borderColor = '';
+                    document.querySelector('.submit-btn').disabled = false;
+                    if (!isIframeVideo && videoElement) videoElement.play();
                 }, 3000);
             }
         }
@@ -478,52 +592,46 @@
 
         // Перезапуск
         function restartMission() {
-            video.currentTime = 0;
+            if (!isIframeVideo && videoElement) videoElement.currentTime = 0;
             score = 0;
             questionsAsked.clear();
             scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
             quizOverlay.style.display = 'none';
             hintBox.style.display = 'none';
-            video.play();
+            textInputContainer.style.display = 'none';
+            optionsContainer.style.display = 'flex';
+            progressBar.style.width = '0%';
+            if (!isIframeVideo && videoElement) videoElement.play();
         }
 
-        // Музыка
-        function toggleMusic() {
-            musicEnabled = !musicEnabled;
-            if (musicEnabled) {
-                bgMusic.play().catch(() => {});
-                musicBtn.textContent = '🔊';
-            } else {
-                bgMusic.pause();
-                musicBtn.textContent = '🔇';
-            }
+        // Завершение видео
+        function onVideoEnd() {
+            alert(`🎉 Отлично! Ваш результат: ${score}/${config.questions.length} ⭐`);
         }
-
-        // События
-        video.addEventListener('timeupdate', () => {
-            updateProgress();
-            checkQuizTrigger();
-        });
-
-        video.addEventListener('ended', () => {
-            alert(`🎉 Hurray! Score: ${score}/${config.questions.length}`);
-        });
 
         // Инициализация
         function init() {
             loadConfig();
             applyDesign();
-            applySettings();
-            video.load();
+            setupVideo();
             
-            // Показываем игру после загрузки
+            // События для MP4 видео
+            if (!isIframeVideo && videoElement) {
+                videoElement.addEventListener('timeupdate', () => {
+                    updateProgress();
+                    checkQuizTrigger();
+                });
+                videoElement.addEventListener('ended', onVideoEnd);
+                videoElement.load();
+            }
+            
             loading.style.display = 'none';
             gameContainer.style.display = 'block';
+            scoreDisplay.textContent = `⭐ Stars: 0/${config.questions.length}`;
             
-            // Автозапуск по клику (требуется для браузеров)
             document.addEventListener('click', () => {
-                if (video.paused && quizOverlay.style.display !== 'flex') {
-                    video.play().catch(() => {});
+                if (!isIframeVideo && videoElement?.paused && quizOverlay.style.display !== 'flex') {
+                    videoElement.play().catch(() => {});
                 }
             }, { once: true });
         }
