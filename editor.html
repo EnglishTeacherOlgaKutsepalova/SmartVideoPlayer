@@ -10,231 +10,95 @@
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(135deg, #1a1a3e 0%, #2d1b4e 100%);
-            min-height: 100vh;
-            color: #fff;
+            min-height: 100vh; color: #fff;
         }
         .editor-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            max-width: 1400px; margin: 0 auto; padding: 20px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
         }
         .panel {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.1); border-radius: 20px;
+            padding: 25px; backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
         }
         h1 {
-            font-family: 'Fredoka', cursive;
-            font-size: 2em;
-            text-align: center;
-            margin-bottom: 25px;
+            font-family: 'Fredoka', cursive; font-size: 2em;
+            text-align: center; margin-bottom: 25px;
             text-shadow: 0 0 20px #00ffff;
-            position: relative;
-        }
-        /* Glitch effect для заголовка */
-        .glitch {
-            position: relative;
-            animation: glitch 2s infinite;
-        }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
-        .glitch::before {
-            left: 2px; text-shadow: -2px 0 #ff00c1;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px; text-shadow: -2px 0 #00fff9;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
-        }
-        @keyframes glitch {
-            0%, 90%, 100% { transform: translate(0); }
-            92% { transform: translate(-2px, 2px); }
-            94% { transform: translate(2px, -2px); }
-            96% { transform: translate(-2px, -2px); }
-            98% { transform: translate(2px, 2px); }
-        }
-        @keyframes glitch-anim {
-            0% { clip: rect(30px, 9999px, 10px, 0); }
-            20% { clip: rect(80px, 9999px, 90px, 0); }
-            40% { clip: rect(10px, 9999px, 60px, 0); }
-            60% { clip: rect(50px, 9999px, 20px, 0); }
-            80% { clip: rect(20px, 9999px, 80px, 0); }
-            100% { clip: rect(70px, 9999px, 40px, 0); }
-        }
-        @keyframes glitch-anim2 {
-            0% { clip: rect(10px, 9999px, 80px, 0); }
-            20% { clip: rect(60px, 9999px, 20px, 0); }
-            40% { clip: rect(90px, 9999px, 40px, 0); }
-            60% { clip: rect(30px, 9999px, 70px, 0); }
-            80% { clip: rect(50px, 9999px, 10px, 0); }
-            100% { clip: rect(80px, 9999px, 60px, 0); }
         }
         h2 {
-            font-family: 'Fredoka', cursive;
-            color: #00ffff;
-            margin-bottom: 15px;
-            font-size: 1.4em;
+            font-family: 'Fredoka', cursive; color: #00ffff;
+            margin-bottom: 15px; font-size: 1.4em;
         }
         .form-group { margin-bottom: 15px; }
         label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 700;
-            color: #ffd700;
+            display: block; margin-bottom: 5px;
+            font-weight: 700; color: #ffd700;
         }
         input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            background: rgba(0,0,0,0.3);
-            color: #fff;
-            font-family: 'Nunito', sans-serif;
-            font-size: 1em;
+            width: 100%; padding: 12px;
+            border: 2px solid #00ffff; border-radius: 10px;
+            background: rgba(0,0,0,0.3); color: #fff;
+            font-family: 'Nunito', sans-serif; font-size: 1em;
         }
         input[type="color"] { height: 50px; cursor: pointer; }
         input:focus, select:focus, textarea:focus {
-            outline: none;
-            box-shadow: 0 0 15px rgba(0,255,255,0.5);
+            outline: none; box-shadow: 0 0 15px rgba(0,255,255,0.5);
         }
         .btn {
             background: linear-gradient(135deg, #00ffff, #0080ff);
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-family: 'Fredoka', cursive;
-            font-size: 1.1em;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: all 0.3s;
+            color: #000; border: none; padding: 15px 30px;
+            border-radius: 50px; font-family: 'Fredoka', cursive;
+            font-size: 1.1em; font-weight: 700; cursor: pointer;
+            width: 100%; margin-top: 10px; transition: all 0.3s;
         }
         .btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,255,255,0.6); }
         .btn-secondary { background: linear-gradient(135deg, #ff6b6b, #ff4757); }
         .btn-success { background: linear-gradient(135deg, #00ff88, #00cc66); }
         .question-item {
-            background: rgba(0,0,0,0.3);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: rgba(0,0,0,0.3); border-radius: 15px;
+            padding: 15px; margin-bottom: 15px;
             border: 1px solid rgba(0,255,255,0.3);
         }
         .question-item h3 { color: #ffd700; margin-bottom: 10px; }
         .option-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 8px;
-            align-items: center;
+            display: flex; gap: 10px; margin-bottom: 8px; align-items: center;
         }
         .option-row input { flex: 1; }
         .option-row button {
-            background: #ff4757;
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: bold;
+            background: #ff4757; color: white; border: none;
+            width: 30px; height: 30px; border-radius: 50%;
+            cursor: pointer; font-weight: bold;
         }
         .preview-frame {
-            width: 100%;
-            height: 500px;
-            border: 3px solid #00ffff;
-            border-radius: 15px;
-            background: #000;
+            width: 100%; height: 500px; border: 3px solid #00ffff;
+            border-radius: 15px; background: #000;
         }
         .code-box {
-            background: #1a1a2e;
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            color: #00ff88;
-            overflow-x: auto;
-            margin-top: 15px;
-            white-space: pre-wrap;
-            word-break: break-all;
+            background: #1a1a2e; border: 2px solid #00ffff;
+            border-radius: 10px; padding: 15px;
+            font-family: 'Courier New', monospace; font-size: 0.9em;
+            color: #00ff88; overflow-x: auto; margin-top: 15px;
+            white-space: pre-wrap; word-break: break-all;
         }
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .tab {
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
+            padding: 10px 20px; background: rgba(255,255,255,0.1);
+            border: 2px solid #00ffff; border-radius: 10px;
+            cursor: pointer; font-weight: 700; transition: all 0.3s;
         }
         .tab.active { background: #00ffff; color: #000; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .notice {
-            background: rgba(255, 215, 0, 0.2);
-            border: 2px solid #ffd700;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            color: #ffd700;
-        }
-        .template-btn {
-            background: rgba(0,255,255,0.2);
-            border: 1px dashed #00ffff;
-            padding: 10px;
-            border-radius: 10px;
-            margin: 5px 0;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.3s;
-        }
-        .template-btn:hover {
-            background: rgba(0,255,255,0.4);
-            transform: translateX(5px);
-        }
-        .question-type-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .question-type-selector button {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            background: rgba(0,0,0,0.3);
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .question-type-selector button.active {
-            background: #00ffff;
-            color: #000;
-        }
-        @media (max-width: 1024px) {
-            .editor-container { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1024px) { .editor-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="editor-container">
         <!-- Левая панель: Настройки -->
         <div class="panel">
-            <h1 class="glitch" data-text="🎮 Редактор Smart Video Player">🎮 Редактор Smart Video Player</h1>
+            <h1>🎮 Редактор Smart Video Player</h1>
             
             <div class="tabs">
                 <div class="tab active" onclick="switchTab('basic')">⚙️ Основные</div>
@@ -246,40 +110,9 @@
             <!-- Основные настройки -->
             <div id="tab-basic" class="tab-content active">
                 <h2>Основные настройки</h2>
-                
                 <div class="form-group">
-                    <label>🎬 Тип видео-источника</label>
-                    <select id="videoSourceType" onchange="toggleVideoSourceFields()">
-                        <option value="direct">📁 Прямая ссылка (MP4)</option>
-                        <option value="youtube">📺 YouTube (iframe)</option>
-                        <option value="rutube">🎥 Rutube (iframe)</option>
-                        <option value="yandex">☁️ Яндекс.Диск (iframe)</option>
-                        <option value="google">🗂️ Google Drive (iframe)</option>
-                    </select>
-                </div>
-                
-                <div id="directSourceField" class="form-group">
                     <label>📺 Ссылка на видео (MP4)</label>
                     <input type="text" id="videoUrl" value="https://www.w3schools.com/html/mov_bbb.mp4" placeholder="https://...video.mp4">
-                </div>
-                
-                <div id="iframeSourceField" class="form-group" style="display: none;">
-                    <label>🔗 Iframe код для вставки видео</label>
-                    <textarea id="videoIframe" rows="4" placeholder='<iframe src="https://..." allowfullscreen></iframe>'></textarea>
-                    <small style="color: #aaa; display: block; margin-top: 5px;">
-                        💡 Скопируйте код вставки из YouTube/Rutube/Диска
-                    </small>
-                </div>
-                
-                <div class="form-group">
-                    <label>🌐 Язык интерфейса</label>
-                    <select id="language">
-                        <option value="ru">🇷🇺 Русский</option>
-                        <option value="en">🇬🇧 English</option>
-                        <option value="es">🇪🇸 Español</option>
-                        <option value="fr">🇫🇷 Français</option>
-                        <option value="de">🇩🇪 Deutsch</option>
-                    </select>
                 </div>
                 <div class="form-group">
                     <label>🏆 Название игры</label>
@@ -292,19 +125,7 @@
                         <option value="⭐">⭐ Звезда</option>
                         <option value="🎯">🎯 Цель</option>
                         <option value="💫">💫 Комета</option>
-                        <option value="🎬">🎬 Кино</option>
-                        <option value="✨">✨ Блеск</option>
                         <option value="">Без иконки</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>🎭 Анимация иконки на прогресс-баре</label>
-                    <select id="iconAnimation">
-                        <option value="none">Без анимации</option>
-                        <option value="bounce">🔄 Прыжки</option>
-                        <option value="spin">🌀 Вращение</option>
-                        <option value="pulse">💓 Пульсация</option>
-                        <option value="swing">🎪 Качание</option>
                     </select>
                 </div>
             </div>
@@ -312,23 +133,7 @@
             <!-- Вопросы -->
             <div id="tab-questions" class="tab-content">
                 <h2>❓ Вопросы викторины</h2>
-                
-                <div class="question-type-selector">
-                    <button type="button" class="active" onclick="setQuestionType('multiple', this)">🔘 Выбор ответа</button>
-                    <button type="button" onclick="setQuestionType('input', this)">⌨️ Ввод текста</button>
-                </div>
-                
-                <div id="templatesSection">
-                    <h3 style="color: #ffd700; margin-bottom: 10px;">📋 Шаблоны для быстрого добавления:</h3>
-                    <div class="template-btn" onclick="addQuestionFromTemplate('multiple')">
-                        ➕ Шаблон: Вопрос с выбором ответа (A/B/C)
-                    </div>
-                    <div class="template-btn" onclick="addQuestionFromTemplate('input')">
-                        ➕ Шаблон: Вопрос с вводом текста
-                    </div>
-                </div>
-                
-                <div id="questionsList" style="margin-top: 20px;"></div>
+                <div id="questionsList"></div>
                 <button class="btn" onclick="addQuestion()">+ Добавить вопрос</button>
             </div>
 
@@ -376,13 +181,6 @@
                         <option value="false">Выключить</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>✨ Глитч-эффект для заголовка</label>
-                    <select id="glitchEffect">
-                        <option value="true">Включить</option>
-                        <option value="false">Выключить</option>
-                    </select>
-                </div>
             </div>
 
             <!-- Экспорт -->
@@ -391,60 +189,41 @@
                 <div class="form-group">
                     <label>🔗 URL вашего player.html</label>
                     <input type="text" id="playerUrl" placeholder="https://yoursite.com/player.html">
-                    <small style="color: #aaa; display: block; margin-top: 5px;">
-                        💡 Пример: https://englishteacherolgakutsepalova.github.io/SmartVideoPlayer/player.html
-                    </small>
                 </div>
                 <button class="btn btn-success" onclick="generateCode()">🔄 Сгенерировать код</button>
                 <button class="btn" onclick="copyCode()">📋 Копировать</button>
-                <button class="btn btn-secondary" onclick="downloadConfig()">💾 Скачать конфиг (JSON)</button>
                 <div class="code-box" id="exportCode"></div>
-                <h3 style="margin: 20px 0 10px; color: #ffd700;">📊 Статистика:</h3>
-                <div id="stats"></div>
+                <div id="stats" style="margin-top: 15px; color: #ffd700;"></div>
             </div>
         </div>
 
         <!-- Правая панель: Предпросмотр -->
         <div class="panel">
             <h2>👁️ Предпросмотр</h2>
-            <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-            <button class="btn" onclick="updatePreview()" style="margin-top: 15px;">🔄 Обновить предпросмотр</button>
+            <iframe id="previewFrame" class="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+            <button class="btn" onclick="updatePreview()" style="margin-top: 15px;">🔄 Обновить</button>
             <div id="previewStatus" style="margin-top: 10px; color: #ffd700;"></div>
         </div>
     </div>
 
     <script>
-        // Данные по умолчанию
         let questions = [
             {
-                type: 'multiple',
                 time: 5,
-                question: "Пример вопроса с выбором?",
+                question: "Пример вопроса?",
                 options: ["Вариант 1", "Вариант 2", "Вариант 3"],
                 correct: "A",
-                hint: "Подсказка 1"
-            },
-            {
-                type: 'input',
-                time: 15,
-                question: "Пример вопроса с вводом?",
-                correctAnswer: "правильный ответ",
-                hint: "Подсказка 2"
+                hint: "Подсказка"
             }
         ];
-        
-        let currentQuestionType = 'multiple';
 
-        // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
             renderQuestions();
-            const currentUrl = window.location.href;
-            const playerUrl = currentUrl.replace('editor.html', 'player.html');
+            const playerUrl = window.location.href.replace('editor.html', 'player.html');
             document.getElementById('playerUrl').value = playerUrl;
             updatePreview();
         });
 
-        // Переключение вкладок
         function switchTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -452,190 +231,75 @@
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
 
-        // Переключение типа вопроса
-        function setQuestionType(type, btn) {
-            currentQuestionType = type;
-            document.querySelectorAll('.question-type-selector button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        // Добавление вопроса из шаблона
-        function addQuestionFromTemplate(type) {
-            if (type === 'multiple') {
-                questions.push({
-                    type: 'multiple',
-                    time: questions.length > 0 ? questions[questions.length - 1].time + 10 : 5,
-                    question: "Новый вопрос?",
-                    options: ["Вариант 1", "Вариант 2", "Вариант 3"],
-                    correct: "A",
-                    hint: "Подсказка"
-                });
-            } else {
-                questions.push({
-                    type: 'input',
-                    time: questions.length > 0 ? questions[questions.length - 1].time + 10 : 5,
-                    question: "Введите ответ:",
-                    correctAnswer: "правильный ответ",
-                    hint: "Подсказка"
-                });
-            }
-            renderQuestions();
-        }
-
-        // Рендер вопросов
         function renderQuestions() {
             const container = document.getElementById('questionsList');
             container.innerHTML = '';
             questions.forEach((q, index) => {
                 const item = document.createElement('div');
                 item.className = 'question-item';
-                
-                if (q.type === 'multiple') {
-                    item.innerHTML = `
-                        <h3>🔘 Вопрос #${index + 1} (на ${q.time} сек)</h3>
-                        <div class="form-group">
-                            <label>Время (сек)</label>
-                            <input type="number" value="${q.time}" onchange="updateQuestion(${index}, 'time', parseInt(this.value))">
-                        </div>
-                        <div class="form-group">
-                            <label>Текст вопроса</label>
-                            <input type="text" value="${q.question}" onchange="updateQuestion(${index}, 'question', this.value)">
-                        </div>
-                        <div class="form-group">
-                            <label>Варианты ответов</label>
-                            ${q.options.map((opt, i) => `
-                                <div class="option-row">
-                                    <input type="text" value="${opt}" onchange="updateOption(${index}, ${i}, this.value)">
-                                    <button onclick="removeOption(${index}, ${i})">×</button>
-                                </div>
-                            `).join('')}
-                            <button class="btn" style="padding: 8px; font-size: 0.9em; margin-top: 5px;" onclick="addOption(${index})">+ Вариант</button>
-                        </div>
-                        <div class="form-group">
-                            <label>✅ Буква правильного ответа (A, B, C...)</label>
-                            <input type="text" value="${q.correct}" maxlength="1" style="width: 60px; text-transform: uppercase;" onchange="updateQuestion(${index}, 'correct', this.value.toUpperCase())">
-                        </div>
-                        <div class="form-group">
-                            <label>💡 Подсказка</label>
-                            <input type="text" value="${q.hint}" onchange="updateQuestion(${index}, 'hint', this.value)">
-                        </div>
-                    `;
-                } else {
-                    item.innerHTML = `
-                        <h3>⌨️ Вопрос #${index + 1} (на ${q.time} сек)</h3>
-                        <div class="form-group">
-                            <label>Время (сек)</label>
-                            <input type="number" value="${q.time}" onchange="updateQuestion(${index}, 'time', parseInt(this.value))">
-                        </div>
-                        <div class="form-group">
-                            <label>Текст вопроса</label>
-                            <input type="text" value="${q.question}" onchange="updateQuestion(${index}, 'question', this.value)">
-                        </div>
-                        <div class="form-group">
-                            <label>✅ Правильный ответ (текст)</label>
-                            <input type="text" value="${q.correctAnswer}" onchange="updateQuestion(${index}, 'correctAnswer', this.value)">
-                        </div>
-                        <div class="form-group">
-                            <label>💡 Подсказка</label>
-                            <input type="text" value="${q.hint}" onchange="updateQuestion(${index}, 'hint', this.value)">
-                        </div>
-                    `;
-                }
-                
-                item.innerHTML += `<button class="btn btn-secondary" onclick="removeQuestion(${index})" style="margin-top: 10px;">🗑️ Удалить вопрос</button>`;
+                item.innerHTML = `
+                    <h3>Вопрос #${index + 1} (на ${q.time} сек)</h3>
+                    <div class="form-group">
+                        <label>Время (сек)</label>
+                        <input type="number" value="${q.time}" onchange="updateQuestion(${index}, 'time', parseInt(this.value))">
+                    </div>
+                    <div class="form-group">
+                        <label>Текст вопроса</label>
+                        <input type="text" value="${q.question}" onchange="updateQuestion(${index}, 'question', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Варианты ответов</label>
+                        ${q.options.map((opt, i) => `
+                            <div class="option-row">
+                                <input type="text" value="${opt}" onchange="updateOption(${index}, ${i}, this.value)">
+                                <button onclick="removeOption(${index}, ${i})">×</button>
+                            </div>
+                        `).join('')}
+                        <button class="btn" style="padding: 8px; font-size: 0.9em; margin-top: 5px;" onclick="addOption(${index})">+ Вариант</button>
+                    </div>
+                    <div class="form-group">
+                        <label>✅ Буква правильного ответа (A, B, C...)</label>
+                        <input type="text" value="${q.correct}" maxlength="1" style="width: 60px; text-transform: uppercase;" onchange="updateQuestion(${index}, 'correct', this.value.toUpperCase())">
+                    </div>
+                    <div class="form-group">
+                        <label>💡 Подсказка</label>
+                        <input type="text" value="${q.hint}" onchange="updateQuestion(${index}, 'hint', this.value)">
+                    </div>
+                    <button class="btn btn-secondary" onclick="removeQuestion(${index})" style="margin-top: 10px;">🗑️ Удалить</button>
+                `;
                 container.appendChild(item);
             });
             updateStats();
         }
 
-        // Обновление вопроса
         function updateQuestion(index, field, value) {
             questions[index][field] = value;
             updateStats();
         }
-
-        // Обновление варианта
-        function updateOption(qIndex, oIndex, value) {
-            questions[qIndex].options[oIndex] = value;
-        }
-
-        // Добавление вопроса
+        function updateOption(qIndex, oIndex, value) { questions[qIndex].options[oIndex] = value; }
         function addQuestion() {
-            if (currentQuestionType === 'multiple') {
-                const letters = ['A', 'B', 'C', 'D', 'E'];
-                questions.push({
-                    type: 'multiple',
-                    time: questions.length > 0 ? questions[questions.length - 1].time + 10 : 5,
-                    question: "Новый вопрос?",
-                    options: ["Вариант 1", "Вариант 2", "Вариант 3"],
-                    correct: "A",
-                    hint: "Подсказка"
-                });
-            } else {
-                questions.push({
-                    type: 'input',
-                    time: questions.length > 0 ? questions[questions.length - 1].time + 10 : 5,
-                    question: "Введите ответ:",
-                    correctAnswer: "правильный ответ",
-                    hint: "Подсказка"
-                });
-            }
+            questions.push({
+                time: questions.length > 0 ? questions[questions.length - 1].time + 10 : 5,
+                question: "Новый вопрос?",
+                options: ["Вариант 1", "Вариант 2", "Вариант 3"],
+                correct: "A",
+                hint: "Подсказка"
+            });
             renderQuestions();
         }
-
-        // Удаление вопроса
-        function removeQuestion(index) {
-            questions.splice(index, 1);
-            renderQuestions();
-        }
-
-        // Добавление варианта
-        function addOption(qIndex) {
-            questions[qIndex].options.push("Новый вариант");
-            renderQuestions();
-        }
-
-        // Удаление варианта
-        function removeOption(qIndex, oIndex) {
-            questions[qIndex].options.splice(oIndex, 1);
-            renderQuestions();
-        }
-
-        // Статистика
+        function removeQuestion(index) { questions.splice(index, 1); renderQuestions(); }
+        function addOption(qIndex) { questions[qIndex].options.push("Новый вариант"); renderQuestions(); }
+        function removeOption(qIndex, oIndex) { questions[qIndex].options.splice(oIndex, 1); renderQuestions(); }
         function updateStats() {
             const maxTime = questions.length > 0 ? Math.max(...questions.map(q => q.time)) : 0;
-            document.getElementById('stats').innerHTML = `
-                <p>📊 Всего вопросов: <strong>${questions.length}</strong></p>
-                <p>⏱️ Мин. длительность видео: <strong>${maxTime + 10} сек</strong></p>
-            `;
+            document.getElementById('stats').innerHTML = `<p>📊 Вопросов: <strong>${questions.length}</strong> | ⏱️ Мин. видео: <strong>${maxTime + 10} сек</strong></p>`;
         }
 
-        // Переключение полей источника видео
-        function toggleVideoSourceFields() {
-            const type = document.getElementById('videoSourceType').value;
-            const directField = document.getElementById('directSourceField');
-            const iframeField = document.getElementById('iframeSourceField');
-            
-            if (type === 'direct') {
-                directField.style.display = 'block';
-                iframeField.style.display = 'none';
-            } else {
-                directField.style.display = 'none';
-                iframeField.style.display = 'block';
-            }
-        }
-
-        // Генерация конфигурации
         function generateConfig() {
-            const videoSourceType = document.getElementById('videoSourceType').value;
             return {
-                videoSourceType: videoSourceType,
                 videoUrl: document.getElementById('videoUrl').value,
-                videoIframe: document.getElementById('videoIframe').value,
-                language: document.getElementById('language').value,
                 gameTitle: document.getElementById('gameTitle').value,
                 progressIcon: document.getElementById('progressIcon').value,
-                iconAnimation: document.getElementById('iconAnimation').value,
                 questions: questions,
                 design: {
                     bgColor1: document.getElementById('bgColor1').value,
@@ -646,81 +310,35 @@
                     correctColor: document.getElementById('correctColor').value,
                     wrongColor: document.getElementById('wrongColor').value,
                     textColor: document.getElementById('textColor').value,
-                    starfield: document.getElementById('starfield').value === 'true',
-                    glitchEffect: document.getElementById('glitchEffect').value === 'true'
+                    starfield: document.getElementById('starfield').value === 'true'
                 }
             };
         }
 
-        // Генерация кода
         function generateCode() {
             const config = generateConfig();
             const playerUrl = document.getElementById('playerUrl').value.trim();
-            
-            if (!playerUrl) {
-                alert('⚠️ Пожалуйста, укажите URL вашего player.html');
-                return;
-            }
-            
-            const configJson = JSON.stringify(config);
-            const configEncoded = btoa(unescape(encodeURIComponent(configJson)));
-            
-            const iframeCode = `<iframe src="${playerUrl}?config=${configEncoded}" width="100%" height="600" frameborder="0" allowfullscreen allow="autoplay"></iframe>`;
-            
-            document.getElementById('exportCode').textContent = iframeCode;
-            document.getElementById('previewStatus').innerHTML = '✅ Код сгенерирован! Скопируйте и вставьте в нужное место.';
+            if (!playerUrl) { alert('⚠️ Укажите URL player.html'); return; }
+            const configEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(config))));
+            document.getElementById('exportCode').textContent = `<iframe src="${playerUrl}?config=${configEncoded}" width="100%" height="600" frameborder="0" allowfullscreen allow="autoplay"></iframe>`;
+            document.getElementById('previewStatus').textContent = '✅ Код готов! Скопируйте и вставьте.';
         }
 
-        // Копирование кода
         function copyCode() {
             const code = document.getElementById('exportCode').textContent;
-            if (!code) {
-                alert('⚠️ Сначала сгенерируйте код!');
-                return;
-            }
-            navigator.clipboard.writeText(code).then(() => {
-                alert('✅ Код скопирован!');
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = code;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                alert('✅ Код скопирован!');
-            });
+            if (!code) { alert('⚠️ Сначала сгенерируйте код!'); return; }
+            navigator.clipboard.writeText(code).then(() => alert('✅ Скопировано!'));
         }
 
-        // Скачать конфиг
-        function downloadConfig() {
-            const config = generateConfig();
-            const configJson = JSON.stringify(config, null, 2);
-            const blob = new Blob([configJson], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'video-player-config.json';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // Обновление предпросмотра
         function updatePreview() {
             const config = generateConfig();
             const playerUrl = document.getElementById('playerUrl').value.trim() || window.location.href.replace('editor.html', 'player.html');
-            
-            const configJson = JSON.stringify(config);
-            const configEncoded = btoa(unescape(encodeURIComponent(configJson)));
-            
-            const previewFrame = document.getElementById('previewFrame');
-            previewFrame.src = `${playerUrl}?config=${configEncoded}`;
-            
-            document.getElementById('previewStatus').innerHTML = '🔄 Предпросмотр обновлён.';
-            
-            previewFrame.onload = () => { console.log('✅ Preview loaded'); };
-            previewFrame.onerror = () => {
-                document.getElementById('previewStatus').innerHTML = '❌ Ошибка загрузки. Проверьте доступность player.html.';
-            };
+            const configEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(config))));
+            const frame = document.getElementById('previewFrame');
+            frame.src = `${playerUrl}?config=${configEncoded}`;
+            document.getElementById('previewStatus').textContent = '🔄 Предпросмотр обновлён.';
+            frame.onload = () => console.log('✅ Preview loaded');
+            frame.onerror = () => document.getElementById('previewStatus').textContent = '❌ Ошибка загрузки player.html';
         }
     </script>
 </body>
